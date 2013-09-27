@@ -4,7 +4,10 @@
 	"keywords": ["framework", "laravel"],
 	"license": "MIT",
 	"require": {
-		"laravel/framework": "4.0.*"
+		"laravel/framework": "4.0.*",
+        "zizaco/entrust": "dev-master",
+        "zizaco/confide": "1.0.x"
+
 	},
 	"autoload": {
 		"classmap": [
