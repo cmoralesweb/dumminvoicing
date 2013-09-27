@@ -1,6 +1,7 @@
 <?php
 
 use Zizaco\Entrust\HasRole;
+use Zizaco\Confide\ConfideUser;
 
 class User extends ConfideUser {
 
