@@ -9,6 +9,9 @@
         "zizaco/confide": "1.0.x"
 
 	},
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*"
+    },
 	"autoload": {
 		"classmap": [
 			"app/commands",
