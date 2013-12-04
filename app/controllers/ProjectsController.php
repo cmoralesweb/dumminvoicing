@@ -20,8 +20,8 @@ class ProjectsController extends \BaseController
 	 */
 	public function index()
 	{
-        $data['projects'] = $this->project->all();
-		return View::make('projects.index', $data) ;
+    $data['projects'] = $this->project->all();
+		return View::make('projects.index', $data);
 	}
 
 	/**
