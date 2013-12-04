@@ -45,7 +45,7 @@ class ProjectControllerTest extends TestCase
     public function testIndex()
     {
         $this->mock->shouldReceive('all')->once();
-        $r = $this->call('GET', 'projects');
+        $this->call('GET', 'projects');
         $this->assertViewHas('projects');
     }
 
