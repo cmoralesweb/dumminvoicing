@@ -7,7 +7,7 @@ class ProjectControllerTest extends TestCase
     {
         parent::setUp();
 
-        $this->mock = $this->mock('Dumminvoicing\Storage\Project\ProjectRepositoryInterface');
+        $this->mock = $this->mock('Dumminvoicing\Storage\Project\ProjectRepository');
     }
 
     public function mock($class)
@@ -37,6 +37,7 @@ class ProjectControllerTest extends TestCase
         //Create user and log in
         $user = FactoryMuff::create('User');
         $this->be($user);
+        $this->mock->shouldReceive('all')->once();
         $response = $this->call('GET', 'projects');
         $this->assertResponseOk();
     }
@@ -44,7 +45,7 @@ class ProjectControllerTest extends TestCase
     public function testIndex()
     {
         $this->mock->shouldReceive('all')->once();
-        $this->call('GET', 'projects');
+        $r = $this->call('GET', 'projects');
         $this->assertViewHas('projects');
     }
 
