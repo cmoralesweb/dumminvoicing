@@ -22,6 +22,8 @@ class CreateItemsTable extends Migration {
             $table->decimal('tax_amount', 25, 2);
             $table->decimal('gross_total', 25, 2);
             $table->decimal('total', 25, 2);
+            $table->decimal('discount', 25, 2);
+            $table->enum('discount_type', array('percent', 'fixed'));
 			$table->timestamps();
 		});
 	}
