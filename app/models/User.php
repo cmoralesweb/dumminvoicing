@@ -14,6 +14,8 @@ class User extends ConfideUser {
         'password' => 'required|between:4,16|confirmed'
     );
 
+    public $autoPurgeRedundantAttributes = true;
+
     /**
      * Array used by FactoryMuff to create Test objects
      */
@@ -22,6 +24,7 @@ class User extends ConfideUser {
         'email' => 'email',
         'password' => '12345',
         'password_confirmation' => '12345',
+        'confirmation_code' => 'string'
     );
 
 
