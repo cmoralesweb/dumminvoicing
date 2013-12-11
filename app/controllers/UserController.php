@@ -103,7 +103,7 @@ class UserController extends BaseController
                 return Redirect::to($r);
             }
 
-            return Redirect::to('/'); // change it to '/admin', '/dashboard' or something
+            return Redirect::intended('/'); // change it to '/admin', '/dashboard' or something
         }
         else
         {
