@@ -10,6 +10,9 @@ class Project extends Ardent
         'user_id' => 'required|numeric',  // User owner id
     );
 
+    public $autoHydrateEntityFromInput = true;    // hydrates on new entries' validation
+    public $forceEntityHydrationFromInput = true; // hydrates whenever validation is called
+
     /**
      * Array used by FactoryMuff to create Test objects
      */
