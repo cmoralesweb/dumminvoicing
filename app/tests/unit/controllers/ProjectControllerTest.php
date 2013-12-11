@@ -49,24 +49,95 @@ class ProjectControllerTest extends TestCase
         $this->assertViewHas('projects');
     }
 
-    // public function testCreate()
-    // {
-    //     $response = $this->call('GET', 'projects/create');
-    //     $view = $response->original;
-    //     $this->assertInstanceOf('Illuminate\View\View', $view);
-    // }
+    public function testCreate()
+    {
+        $response = $this->call('GET', 'projects/create');
+        $view = $response->original;
+        $this->assertInstanceOf('Illuminate\View\View', $view);
+    }
 
-    // public function testStoreFails()
-    // {
-    //     $this->mock->shouldReceive('create')
-    //         ->once()
-    //         ->andReturn(Mockery::mock(array(
-    //                 false,
-    //                 'errors' => array()
-    //                 )));
-    //     $this->call('POST', 'projects');
-    //     $this->assertRedirectedToRoute('projects.create');
-    //     $this->assertSessionHasErrors();
-    // }
+    public function testStoreFails()
+    {
+        $this->mock->shouldReceive('save')->once()->andReturn(false);
 
+    // Mock MessageBag and all() method
+        $errors = Mockery::mock('Illuminate\Support\MessageBag');
+        $errors->shouldReceive('all')->once()->andReturn(array('foo' => 'bar'));
+
+    // Mock errors() method from model and make it return the MessageBag mock
+        $this->mock->shouldReceive('errors')->andReturn($errors);
+
+    // Proceed to make the post call
+        $this->call('POST', 'projects');
+        $this->assertRedirectedToRoute('projects.create');
+        $this->assertSessionHasErrors();
+    }
+
+    public function testStoreSuccess()
+    {
+        $this->mock->shouldReceive('save')
+        ->once()
+        ->andReturn(true);
+
+        $this->call('POST', 'projects');
+        $this->assertRedirectedToRoute('projects.index');
+        $this->assertSessionHas('message');
+    }
+
+    public function testShow()
+    {
+        $this->mock->shouldReceive('find')
+        ->once()
+        ->with(1);
+
+        $this->call('GET', 'projects/1');
+
+        $this->assertViewHas('project');
+    }
+
+    public function testEdit()
+    {
+        $this->mock->shouldReceive('find')->once()->with(1)->andReturn($this->mock);
+        $this->mock->shouldReceive('getAttribute')->once()->with('name');
+        $this->call('GET', 'projects/1/edit');
+        $this->assertViewHas('project');
+    }
+
+    public function testUpdateFails()
+    {
+         $this->mock->shouldReceive('find')->once()->with(1)->andReturn($this->mock);
+         $this->mock->shouldReceive('save')->once()->andReturn(false);
+
+    // Mock MessageBag and all() method
+        $errors = Mockery::mock('Illuminate\Support\MessageBag');
+        $errors->shouldReceive('all')->once()->andReturn(array('foo' => 'bar'));
+
+    // Mock errors() method from model and make it return the MessageBag mock
+        $this->mock->shouldReceive('errors')->andReturn($errors);
+
+    // Proceed to make the post call
+        $this->call('PUT', 'projects/1');
+        $this->assertRedirectedToRoute('projects.edit', 1);
+        $this->assertSessionHasErrors();
+    }
+
+    public function testUpdateSuccess()
+    {
+        $this->mock->shouldReceive('find')->once()->with(1)->andReturn($this->mock);
+        $this->mock->shouldReceive('save')
+        ->once()
+        ->andReturn(true);
+
+        $this->call('PUT', 'projects/1');
+
+        $this->assertRedirectedToRoute('projects.show', 1);
+        $this->assertSessionHas('flash');
+    }
+
+    public function testDelete()
+    {
+        $this->mock->shouldReceive('find')->once()->with(1)->andReturn($this->mock);
+        $this->mock->shouldReceive('delete');
+        $this->call('DELETE', 'projects/1');
+    }
 }
