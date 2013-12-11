@@ -3,6 +3,14 @@ use Zizaco\FactoryMuff\Facade\FactoryMuff;
 
 class ProjectControllerTest extends TestCase
 {
+    protected function mockAuth()
+    {
+        $user = FactoryMuff::create('User');
+        $this->be($user);
+
+        return Auth::user();
+    }
+
     public function setUp()
     {
         parent::setUp();
@@ -35,8 +43,7 @@ class ProjectControllerTest extends TestCase
     {
         Route::enableFilters();
         //Create user and log in
-        $user = FactoryMuff::create('User');
-        $this->be($user);
+        $this->mockAuth();
         $this->mock->shouldReceive('all')->once();
         $response = $this->call('GET', 'projects');
         $this->assertResponseOk();
@@ -58,6 +65,11 @@ class ProjectControllerTest extends TestCase
 
     public function testStoreFails()
     {
+        $user = $this->mockAuth();
+        $this->mock->shouldReceive('setAttribute')
+        ->once()
+        ->with('user_id', $user->id);
+
         $this->mock->shouldReceive('save')->once()->andReturn(false);
 
     // Mock MessageBag and all() method
@@ -75,6 +87,12 @@ class ProjectControllerTest extends TestCase
 
     public function testStoreSuccess()
     {
+        $user = $this->mockAuth();
+
+        $this->mock->shouldReceive('setAttribute')
+        ->once()
+        ->with('user_id', $user->id);
+
         $this->mock->shouldReceive('save')
         ->once()
         ->andReturn(true);
