@@ -114,8 +114,7 @@ return array(
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
         'Zizaco\Confide\ConfideServiceProvider',
-        'Zizaco\Entrust\EntrustServiceProvider',
-        'Dumminvoicing\Storage\StorageServiceProvider'
+        'Zizaco\Entrust\EntrustServiceProvider'
 	),
 
 	/*

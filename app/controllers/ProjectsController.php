@@ -1,7 +1,5 @@
 <?php
 
-use Dumminvoicing\Storage\Project\ProjectRepository as Project;
-
 class ProjectsController extends \BaseController
 {
     protected $project;

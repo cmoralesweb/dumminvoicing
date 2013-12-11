@@ -7,12 +7,12 @@ class ProjectControllerTest extends TestCase
     {
         parent::setUp();
 
-        $this->mock = $this->mock('Dumminvoicing\Storage\Project\ProjectRepository');
+        $this->mock = $this->mock('Project');
     }
 
     public function mock($class)
     {
-        $mock = Mockery::mock($class);
+        $mock = Mockery::mock('Eloquent', $class);
 
         $this->app->instance($class, $mock);
 
