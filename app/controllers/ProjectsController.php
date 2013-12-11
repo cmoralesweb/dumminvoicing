@@ -3,10 +3,14 @@
 class ProjectsController extends \BaseController
 {
     protected $project;
+    protected $currentUser;
 
     public function __construct(Project $project)
     {
         $this->project = $project;
+
+        //Projects will be automatically owned by the logged in user.
+        $this->currentUser = Auth::user();
 
         $this->beforeFilter('auth');
     }
@@ -39,6 +43,7 @@ class ProjectsController extends \BaseController
 	 */
 	public function store()
     {
+        $this->project->user_id = $this->currentUser->id;
         $isSaved = $this->project->save();
         if ( $isSaved ) {
             return Redirect::route('projects.index')
