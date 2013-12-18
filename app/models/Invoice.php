@@ -6,7 +6,7 @@ class Invoice extends Ardent
      * Ardent validation rules
      */
     public static $rules = array(
-        'state' => 'in:payed, pending',
+        'state' => 'in:payed,pending|required',
         'emitter_email' => 'email',
         'recipient_email' => 'email',
         'user_id' => 'required|numeric',  // User creator id
@@ -14,13 +14,29 @@ class Invoice extends Ardent
         'series_id' => 'required|numeric'
     );
 
-    // /**
-    //  * Array used by FactoryMuff to create Test objects
-    //  */
-    // public static $factory = array(
-    //     'name' => 'string',
-    //     'user_id' => 'factory|User', // Will be the id of an existent User.
-    // );
+    /**
+     * Array used by FactoryMuff to create Test objects
+     * We don't need to fill all fields
+     */
+    public static $factory = array(
+        'state' => 'pending',
+        'emitter_name' => 'string',
+        'emitter_surname' => 'string',
+        'emitter_commercial_name' => 'string',
+        'emitter_email' => 'email',
+        'recipient_name' => 'string',
+        'recipient_surname' => 'string',
+        'recipient_email' => 'email',
+        'user_id' => 'factory|User', // Will be the id of an existent User.
+        'project_id' => 'factory|Project', // Will be the id of an existent Project.
+        'series_id' => 'factory|Series', // Will be the id of an existent Series.
+    );
+
+    //Attributes that can't be mass-assigned
+    protected $guarded = array('id', 'user_id', 'project_id', 'series_id');
+
+    public $autoHydrateEntityFromInput = true;    // hydrates on new entries' validation
+    public $forceEntityHydrationFromInput = true; // hydrates whenever validation is called
 
     /**
      * Created by an User
