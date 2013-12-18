@@ -17,8 +17,9 @@ class CreateSeriesTable extends Migration {
 			$table->increments('id');
             $table->string('name');
             $table->string('prefix');
-			$table->timestamps();
-		});
+            $table->integer('project_id');
+            $table->timestamps();
+        });
 	}
 
 	/**

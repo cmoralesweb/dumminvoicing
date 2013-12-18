@@ -46,7 +46,6 @@ class CreateInvoiceTable extends Migration {
             $table->string('recipient_country')->nullable();
             $table->boolean('sent');
             $table->integer('user_id');
-            $table->integer('project_id');
             $table->integer('series_id');
 			$table->timestamps();
 		});
