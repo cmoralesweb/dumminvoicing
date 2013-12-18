@@ -16,7 +16,7 @@ class CreateProductsTable extends Migration {
 		{
 			$table->increments('id');
             $table->string('name');
-            $table->decimal('unit_price', 25, 2);
+            $table->decimal('unit_price', 25, 4)->default(0);
 			$table->timestamps();
 		});
 	}

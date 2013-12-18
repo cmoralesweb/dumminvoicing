@@ -16,8 +16,8 @@ class CreatePaymentsTable extends Migration {
 		{
 			$table->increments('id');
             $table->integer('invoice_id');
-            $table->decimal('amount', 25, 2);
-            $table->text('note');
+            $table->decimal('amount', 25, 4)->default(0);
+            $table->text('note')->nullable();
 			$table->timestamps();
 		});
 	}

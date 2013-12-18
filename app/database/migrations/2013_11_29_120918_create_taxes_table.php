@@ -16,7 +16,7 @@ class CreateTaxesTable extends Migration {
 		{
 			$table->increments('id');
             $table->string('name');
-            $table->decimal('percentage', 10, 10);
+            $table->decimal('percentage', 20, 10)->default(0);
 			$table->timestamps();
 		});
 	}

@@ -16,9 +16,9 @@ class CreateAppliedTaxesTable extends Migration {
 		{
 			$table->increments('id');
             $table->string('name');
-            $table->decimal('percentage', 10, 8);
+            $table->decimal('percentage', 20, 10)->default(0);
             $table->integer('item_id');
-            $table->tinyInteger('priority');
+            $table->tinyInteger('priority')->default(0);
             $table->timestamps();
         });
 	}

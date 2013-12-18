@@ -15,20 +15,20 @@ class CreateInvoicingEntitiesTable extends Migration {
 		Schema::create('invoicing_entities', function(Blueprint $table)
 		{
 			$table->increments('id');
-            $table->string('name');
-            $table->string('surname');
-            $table->string('commercial_name');
-            $table->string('telephone1');
-            $table->string('telephone2');
-            $table->string('fax');
-            $table->string('email');
-            $table->string('business_id');
-            $table->string('street1');
-            $table->string('street2');
-            $table->string('city');
-            $table->string('state');
-            $table->string('zip');
-            $table->string('country');
+            $table->string('name')->nullable();
+            $table->string('surname')->nullable();
+            $table->string('commercial_name')->nullable();
+            $table->string('telephone1')->nullable();
+            $table->string('telephone2')->nullable();
+            $table->string('fax')->nullable();
+            $table->string('email')->nullable();
+            $table->string('business_id')->nullable();
+            $table->string('street1')->nullable();
+            $table->string('street2')->nullable();
+            $table->string('city')->nullable();
+            $table->string('state')->nullable();
+            $table->string('zip')->nullable();
+            $table->string('country')->nullable();
 			$table->timestamps();
 		});
 	}

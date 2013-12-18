@@ -17,13 +17,13 @@ class CreateItemsTable extends Migration {
 			$table->increments('id');
             $table->integer('invoice_id');
             $table->string('product_name');
-            $table->decimal('quantity', 25, 4);
-            $table->decimal('unit_price', 25, 2);
-            $table->decimal('tax_amount', 25, 2);
-            $table->decimal('gross_total', 25, 2);
-            $table->decimal('total', 25, 2);
-            $table->decimal('discount', 25, 2);
-            $table->enum('discount_type', array('percent', 'fixed'));
+            $table->decimal('quantity', 25, 4)->default(0);
+            $table->decimal('unit_price', 25, 4)->default(0)->unsigned();
+            $table->decimal('tax_amount', 25, 4)->default(0);
+            $table->decimal('gross_total', 25, 4)->default(0);
+            $table->decimal('total', 25, 4)->default(0);
+            $table->decimal('discount', 25, 4)->nullable();
+            $table->enum('discount_type', array('percent', 'fixed'))->nullable();
 			$table->timestamps();
 		});
 	}
