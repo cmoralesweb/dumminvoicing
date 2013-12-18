@@ -24,7 +24,7 @@ class Project extends Ardent
     /*
     Properties that can be mass assigned
      */
-    protected $fillable = array('name', 'user_id');
+    protected $fillable = array('name');
 
     /**
      * Belongs to user
@@ -41,5 +41,14 @@ class Project extends Ardent
     {
         return $this->belongsToMany( 'User', 'project_user', 'project_id', 'user_id')->withTimestamps();
     }
+
+    /**
+     * Can have many Invoices
+     */
+    public function invoices()
+    {
+        return $this->hasMany( 'Invoice');
+    }
+
 
 }
