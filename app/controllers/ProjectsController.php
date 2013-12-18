@@ -47,7 +47,7 @@ class ProjectsController extends \BaseController
         $isSaved = $this->project->save();
         if ( $isSaved ) {
             return Redirect::route('projects.index')
-            ->with('message', Lang::get('projects.project_created'));
+            ->with('flash', Lang::get('projects.project_created'));
         }
         $errors = $this->project->errors()->all();
         return Redirect::route('projects.create')
@@ -63,7 +63,7 @@ class ProjectsController extends \BaseController
 	 */
 	public function show($id)
 	{
-		$data['project'] = $this->project->find($id);
+		$data['project'] = $this->project->findOrFail($id);
 
         return View::make('projects.show', $data);
     }
@@ -76,7 +76,7 @@ class ProjectsController extends \BaseController
 	 */
 	public function edit($id)
 	{
-        $data['project'] = $this->project->find($id);
+        $data['project'] = $this->project->findOrFail($id);
 		return View::make('projects.edit', $data);
 	}
 
@@ -88,8 +88,8 @@ class ProjectsController extends \BaseController
 	 */
 	public function update($id)
 	{
-        $project = $this->project->find($id);
-        $isUpdated = $project->save();
+        $this->project = $this->project->findOrFail($id);
+        $isUpdated = $this->project->save();
         if ( $isUpdated ) {
             return Redirect::route('projects.show', $id)
             ->with('flash', Lang::get('projects.project_created'));
@@ -108,8 +108,10 @@ class ProjectsController extends \BaseController
 	 */
 	public function destroy($id)
 	{
-		$project = $this->project->find($id);
-        return $project->delete();
+		$project = $this->project->findOrFail($id);
+        $project->delete();
+        return Redirect::route('projects.index')
+            ->with('flash', Lang::get('projects.project_deleted'));
 	}
 
 }

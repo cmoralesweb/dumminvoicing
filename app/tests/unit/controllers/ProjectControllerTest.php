@@ -1,16 +1,8 @@
 <?php
 use Zizaco\FactoryMuff\Facade\FactoryMuff;
 
-class ProjectControllerTest extends TestCase
+class ProjectsControllerTest extends TestCase
 {
-    protected function mockAuth()
-    {
-        $user = FactoryMuff::create('User');
-        $this->be($user);
-
-        return Auth::user();
-    }
-
     public function setUp()
     {
         parent::setUp();
@@ -99,12 +91,12 @@ class ProjectControllerTest extends TestCase
 
         $this->call('POST', 'projects');
         $this->assertRedirectedToRoute('projects.index');
-        $this->assertSessionHas('message');
+        $this->assertSessionHas('flash');
     }
 
     public function testShow()
     {
-        $this->mock->shouldReceive('find')
+        $this->mock->shouldReceive('findOrFail')
         ->once()
         ->with(1);
 
@@ -115,16 +107,19 @@ class ProjectControllerTest extends TestCase
 
     public function testEdit()
     {
-        $this->mock->shouldReceive('find')->once()->with(1)->andReturn($this->mock);
-        $this->mock->shouldReceive('getAttribute')->once()->with('name');
+        $projectMock = Mockery::mock('Project[findOrFail]');
+
+        $this->app->instance('Project', $projectMock);
+
+        $projectMock->shouldReceive('findOrFail')->once()->with(1)->andReturn(\Mockery::self());
         $this->call('GET', 'projects/1/edit');
         $this->assertViewHas('project');
     }
 
     public function testUpdateFails()
     {
-         $this->mock->shouldReceive('find')->once()->with(1)->andReturn($this->mock);
-         $this->mock->shouldReceive('save')->once()->andReturn(false);
+        $this->mock->shouldReceive('findOrFail')->once()->with(1)->andReturn($this->mock);
+        $this->mock->shouldReceive('save')->once()->andReturn(false);
 
     // Mock MessageBag and all() method
         $errors = Mockery::mock('Illuminate\Support\MessageBag');
@@ -132,6 +127,7 @@ class ProjectControllerTest extends TestCase
 
     // Mock errors() method from model and make it return the MessageBag mock
         $this->mock->shouldReceive('errors')->andReturn($errors);
+
 
     // Proceed to make the post call
         $this->call('PUT', 'projects/1');
@@ -141,7 +137,7 @@ class ProjectControllerTest extends TestCase
 
     public function testUpdateSuccess()
     {
-        $this->mock->shouldReceive('find')->once()->with(1)->andReturn($this->mock);
+        $this->mock->shouldReceive('findOrFail')->once()->with(1)->andReturn($this->mock);
         $this->mock->shouldReceive('save')
         ->once()
         ->andReturn(true);
@@ -154,8 +150,10 @@ class ProjectControllerTest extends TestCase
 
     public function testDelete()
     {
-        $this->mock->shouldReceive('find')->once()->with(1)->andReturn($this->mock);
+        $this->mock->shouldReceive('findOrFail')->once()->with(1)->andReturn($this->mock);
         $this->mock->shouldReceive('delete');
         $this->call('DELETE', 'projects/1');
+        $this->assertRedirectedToRoute('projects.index');
+        $this->assertSessionHas('flash');
     }
 }
