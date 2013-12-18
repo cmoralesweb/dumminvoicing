@@ -1,6 +1,6 @@
 <?php
 use LaravelBook\Ardent\Ardent;
-class Invoice extends Ardent
+class Item extends Ardent
 {
     /**
      * Ardent validation rules
