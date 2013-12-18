@@ -1,6 +1,15 @@
 <?php
+use Zizaco\FactoryMuff\Facade\FactoryMuff;
 
 class TestCase extends Illuminate\Foundation\Testing\TestCase {
+
+    protected function mockAuth()
+    {
+        $user = FactoryMuff::create('User');
+        $this->be($user);
+
+        return Auth::user();
+    }
 
     /**
      * Default preparation for each test
