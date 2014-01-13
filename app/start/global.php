@@ -53,6 +53,9 @@ App::error(function(Exception $exception, $code)
 	Log::error($exception);
 });
 
+// Custom errors:
+require_once app_path().'/exceptions/models.php';
+
 /*
 |--------------------------------------------------------------------------
 | Maintenance Mode Handler
