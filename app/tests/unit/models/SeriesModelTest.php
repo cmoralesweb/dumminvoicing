@@ -12,4 +12,12 @@ class SeriesModelTest extends TestCase
 
         $this->assertEquals($invoice->id, $series->invoices()->first()->id);
     }
+
+    public function testRelationshipWithProjects()
+    {
+        $series = FactoryMuff::create('Series');
+        $series->save();
+
+        $this->assertEquals($series->project_id, $series->project->id);
+    }
 }

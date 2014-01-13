@@ -19,6 +19,15 @@ Route::get('user/reset/{token}', 'UserController@getReset');
 Route::controller( 'user', 'UserController');
 
 Route::resource('projects', 'ProjectsController');
-Route::resource('projects.invoices', 'InvoicesController'); //We want to nest the controller
-//so we have routes like /projects/1/invoices/1/edit
+
+//We want to nest the controller so we have routes like /projects/1/series/1/edit :
+Route::resource('projects.series', 'ProjectsSeriesController');
+
+//We want to nest the controller so we have routes like /projects/1/series/1/invoices/1/edit :
+//"Create" and "Store" are going to be handled by InvoicesController, so it's easier to create invoices
+Route::resource('projects.series.invoices', 'ProjectsSeriesInvoicesController',
+ array('except' => array('create', 'store')));
+Route::resource('invoices', 'InvoicesController',
+                array('only' => array('create', 'store')));
+
 

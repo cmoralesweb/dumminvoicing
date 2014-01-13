@@ -2,15 +2,7 @@
 use Zizaco\FactoryMuff\Facade\FactoryMuff;
 class InvoiceModelTest extends TestCase
 {
-    public function testRelationshipWithProjects()
-    {
-        $invoice = FactoryMuff::create('Invoice');
-        $invoice->save();
-
-        $this->assertEquals($invoice->project_id, $invoice->project->id);
-    }
-
-    public function testRelationshipWithUsers()
+   public function testRelationshipWithUsers()
     {
         $invoice = FactoryMuff::create('Invoice');
         $invoice->save();

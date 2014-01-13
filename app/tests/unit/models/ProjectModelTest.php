@@ -26,15 +26,15 @@ class ProjectModelTest extends TestCase
         $this->assertEquals($project->user_id, $project->authorized->first()->id);
     }
 
-    public function testRelationshipWithInvoices()
+    public function testRelationshipWithSeries()
     {
         $project = FactoryMuff::create('Project');
         $project->save();
 
-        $invoice = FactoryMuff::create('Invoice');
-        $invoice->project()->associate($project)->save();
+        $series = FactoryMuff::create('Series');
+        $series->project()->associate($project)->save();
 
-        $this->assertEquals($invoice->id, $project->invoices()->first()->id);
+        $this->assertEquals($series->id, $project->series()->first()->id);
     }
 
 }

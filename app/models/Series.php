@@ -8,7 +8,8 @@ class Series extends Ardent
      */
     public static $rules = array(
         'name' => 'required',  // Parent Invoice ID
-        'prefix' => 'required'
+        'prefix' => 'required',
+        'project_id' => 'required|numeric'
     );
 
     /**
@@ -17,6 +18,7 @@ class Series extends Ardent
     public static $factory = array(
         'name' => 'string',
         'prefix' => 'string', // Will be the id of an existent User.
+        'project_id' => 'factory|Project', // Will be the id of an existent Project.
     );
 
 
@@ -26,6 +28,15 @@ class Series extends Ardent
     public function invoices()
     {
         return $this->hasMany( 'Invoice');
+    }
+
+
+    /**
+     * Belongs to one Project
+     */
+    public function project()
+    {
+        return $this->belongsTo( 'Project');
     }
 
 }

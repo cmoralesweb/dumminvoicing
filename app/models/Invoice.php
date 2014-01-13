@@ -9,9 +9,9 @@ class Invoice extends Ardent
         'state' => 'in:payed,pending|required',
         'emitter_email' => 'email',
         'recipient_email' => 'email',
+        'sent' => 'in:0,1|required',
         'user_id' => 'required|numeric',  // User creator id
-        'project_id' => 'required|numeric',
-        'series_id' => 'required|numeric'
+        'series_id' => 'required|numeric',
     );
 
     /**
@@ -27,8 +27,8 @@ class Invoice extends Ardent
         'recipient_name' => 'string',
         'recipient_surname' => 'string',
         'recipient_email' => 'email',
+        'sent' => '0',
         'user_id' => 'factory|User', // Will be the id of an existent User.
-        'project_id' => 'factory|Project', // Will be the id of an existent Project.
         'series_id' => 'factory|Series', // Will be the id of an existent Series.
     );
 
@@ -44,14 +44,6 @@ class Invoice extends Ardent
     public function creator()
     {
         return $this->belongsTo( 'User', 'user_id');
-    }
-
-    /**
-     * Belongs to one Project
-     */
-    public function project()
-    {
-        return $this->belongsTo( 'Project');
     }
 
 

@@ -43,11 +43,11 @@ class Project extends Ardent
     }
 
     /**
-     * Can have many Invoices
+     * Can have many Series
      */
-    public function invoices()
+    public function series()
     {
-        return $this->hasMany( 'Invoice');
+        return $this->hasMany( 'Series', 'project_id');
     }
 
 
